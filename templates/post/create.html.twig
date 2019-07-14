@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+   <div >
+      <div>
+         <h2 >Your post</h2>
+         {{ form_start(form)}}
+         {{form_widget(form) }}
+         <button type="submit">Save</button>
+         {{form_end(form) }}
+         {{form_errors(form)}}
+      </div>
+   </div>
+{% endblock %}

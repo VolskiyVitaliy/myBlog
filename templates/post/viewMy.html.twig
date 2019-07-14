@@ -5,7 +5,7 @@
         <div>
             <div>
                 <div>
-                    <div>{{post.updatedat|date('H:i:s d-m-Y')}} About: <a href="{{path('viewPost',{slug: post.slug})}}"> {{post.title}}</a></div>
+                    <div>{{post.updatedat|date('H:i:s d-m-Y')}} About: {{post.title}} <a href="{{path('update',{slug: post.slug})}}">Edit</a> <a href="{{path('delete',{id: post.id})}}">Delete</a></div>
                 </div>
             </div>
         </div>

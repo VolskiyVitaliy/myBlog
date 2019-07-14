@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="blog-post">
+        <h2>{{post.title}}</h2>
+        <p><em>{{post.updatedat|date('H:i:s d-m-Y')}}</em> By:&nbsp;<small>{{post.author.username}}</small></p>
+        <p>{{post.content}}</p>
+        {% if app.user %}
+            {{form_start(comment,{'action':path("comment",{id:post.id}),'method':'POST'})}}
+            {{form_widget(comment)}}
+            <button type="submit">Add</button>
+            {{form_end(comment)}}
+        {% endif %}
+        {% for comment in comments %}
+            <div class="jumbotron-fluid">
+                <small>By: {{comment.author.username}} at {{comment.createdat|date('H:i:s d-m-Y')}}</small>
+                <p>{{comment.content}}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,3 +1,34 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+#MainController
+main:
+    path: /
+    controller: App\Controller\MainController::index
+
+#PostController
+create:
+    path: /post/new
+    controller: App\Controller\PostController::create
+
+delete:
+    path: /post/delete/{id}
+    controller: App\Controller\PostController::delete
+
+update:
+    path: /post/edit/{slug}
+    controller: App\Controller\PostController::update
+
+view-my:
+    path: /post/all/view-my
+    controller: App\Controller\PostController::viewMy
+
+viewPost:
+    path: /post/{slug}
+    controller: App\Controller\PostController::viewPost
+
+#CommentController
+comment:
+    path: /comment/post/{id}
+    controller: App\Controller\CommentController::setComment

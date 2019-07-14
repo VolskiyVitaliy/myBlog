@@ -58,7 +58,7 @@ class Post
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post",cascade="remove")
      */
     private $comments;
 
@@ -161,5 +161,10 @@ class Post
         }
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 }

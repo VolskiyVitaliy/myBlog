@@ -7,19 +7,19 @@
 <body>
 <div id="sidebar">
     {% block sidebar %}
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% if app.user %}
             <ul>
                 <li>My blog</li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/post/new">NewPost</a></li>
-                <li><a href="/post/all">MyPosts</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="{{path('main')}}">Home</a></li>
+                <li><a href="{{path('create')}}">NewPost</a></li>
+                <li><a href="{{path('view-my')}}">MyPosts</a></li>
+                <li><a href=>Logout</a></li>
             </ul>
 
     {% elseif is_granted(expression('is_anonymous()')) %}
             <ul>
                 <li>My blog</li>
-                <li><a href="/">Home</a></li>
+                <li><a href="{{path('main')}}">Home</a></li>
                 <li><a href="/login">Login</a></li>
             </ul>
     {% endif %}
