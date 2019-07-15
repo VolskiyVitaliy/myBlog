@@ -4,14 +4,14 @@
         <h2>{{post.title}}</h2>
         <p><em>{{post.updatedat|date('H:i:s d-m-Y')}}</em> By:&nbsp;<small>{{post.author.username}}</small></p>
         <p>{{post.content}}</p>
-        {% if app.user %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {{form_start(comment,{'action':path("comment",{id:post.id}),'method':'POST'})}}
             {{form_widget(comment)}}
             <button type="submit">Add</button>
             {{form_end(comment)}}
         {% endif %}
         {% for comment in comments %}
-            <div class="jumbotron-fluid">
+            <div>
                 <small>By: {{comment.author.username}} at {{comment.createdat|date('H:i:s d-m-Y')}}</small>
                 <p>{{comment.content}}</p>
             </div>

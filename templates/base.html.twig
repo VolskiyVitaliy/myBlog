@@ -7,13 +7,13 @@
 <body>
 <div id="sidebar">
     {% block sidebar %}
-    {% if app.user %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <ul>
                 <li>My blog</li>
                 <li><a href="{{path('main')}}">Home</a></li>
                 <li><a href="{{path('create')}}">NewPost</a></li>
                 <li><a href="{{path('view-my')}}">MyPosts</a></li>
-                <li><a href=>Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
 
     {% elseif is_granted(expression('is_anonymous()')) %}
