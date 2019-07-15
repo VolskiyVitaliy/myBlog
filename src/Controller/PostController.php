@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
 use App\Entity\Comment;
@@ -18,6 +19,7 @@ class PostController extends AbstractController
 {
     /**
      * @Route("/post/new", name="create_post")
+     * @IsGranted("ROLE_USER", message="No access! Get out!")
      */
     public function create(Request $req)
     {
@@ -36,6 +38,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/post/delete/{id}", name="delete_post")
+     * @IsGranted("ROLE_USER", message="No access! Get out!")
      */
     public function delete(Request $req)
     {
@@ -51,6 +54,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/post/edit/{slug}", name="edit_post")
+     * @IsGranted("ROLE_USER", message="No access! Get out!")
      */
     public function update(Request $req, Post $post)
     {
@@ -80,6 +84,7 @@ class PostController extends AbstractController
 
     /**
      * @Route("/post/all/view-my", name="view_my_post")
+     * @IsGranted("ROLE_USER", message="No access! Get out!")
      */
     public function viewMy(Request $request, PaginatorInterface $paginator)
     {

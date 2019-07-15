@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
 use App\Entity\Comment;
@@ -22,6 +23,7 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/comment/post/{id}", name="comment")
+     * @IsGranted("ROLE_USER", message="No access! Get out!")
      */
     public function setComment(Request $req)
     {
