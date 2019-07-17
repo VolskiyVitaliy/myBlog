@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -44,11 +45,13 @@ class PostController extends AbstractController
     {
         $id = $req->get('id');
         $post = $this->getDoctrine()->getRepository(Post::class)->findOneBy(['id' => $id]);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($post);
-        $entityManager->flush();
-
+        if($this->getUser() === $post->getAuthor()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($post);
+            $entityManager->flush();
+        }else{
+            throw new AccessDeniedException("This is not your post. You can't delete it.");
+        }
         return $this->redirectToRoute('view-my');
     }
 
@@ -58,15 +61,20 @@ class PostController extends AbstractController
      */
     public function update(Request $req, Post $post)
     {
-        $form = $this->createForm(PostType::class, $post);
+        if($this->getUser() === $post->getAuthor()) {
+            $form = $this->createForm(PostType::class, $post);
+            $form->handleRequest($req);
 
-        $form->handleRequest($req);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
-            return $this->redirectToRoute('view-my');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $post = $form->getData();
+                var_dump($post);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+                return $this->redirectToRoute('view-my');
+            }
+        }
+        else {
+            throw new AccessDeniedException("This is not your post. You can't edit it.");
         }
         return $this->render("post/create.html.twig", ['form' => $form->createView()]);
     }

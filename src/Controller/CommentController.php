@@ -13,14 +13,6 @@ use App\Form\CommentType;
 
 class CommentController extends AbstractController
 {
-
-    public function getCommentForm(Request $req)
-    {
-        $form = $this->createForm(CommentType::class);
-
-        return $this->redirectToRoute("main");
-    }
-
     /**
      * @Route("/comment/post/{id}", name="comment")
      * @IsGranted("ROLE_USER", message="No access! Get out!")
